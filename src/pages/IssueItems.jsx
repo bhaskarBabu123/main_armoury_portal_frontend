@@ -231,7 +231,7 @@ const handleFinalIssue = async () => {
                 <div className="flex items-center gap-6">
                   <div className="relative">
                     <img 
-                      src={`http://localhost:5000/api/uploads/${selectedOfficer.profilePicture}`} 
+                      src={`https://main-armoury-portal-backend.onrender.com/api/uploads/${selectedOfficer.profilePicture}`} 
                       className="w-20 h-20 rounded-sm object-cover border-2 border-slate-900 shadow-lg" 
                       alt="Profile"
                       onError={(e) => e.target.src = 'https://via.placeholder.com/80?text=OFFICER'} 

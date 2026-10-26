@@ -162,7 +162,7 @@ const Officers = () => {
                       <div className="flex items-center gap-4">
                         <div className="h-12 w-12 bg-gray-100 border border-gray-200 overflow-hidden">
                           {officer.profilePicture ? (
-                            <img src={`http://localhost:5000/uploads/profiles/${officer.profilePicture}`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />
+                            <img src={`https://main-armoury-portal-backend.onrender.com/uploads/profiles/${officer.profilePicture}`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-300"><User size={20}/></div>
                           )}
@@ -224,7 +224,7 @@ const Officers = () => {
                 <div className="w-full md:w-1/3">
                   <div className="aspect-square bg-gray-50 border-2 border-slate-100 p-2 grayscale">
                     {selectedOfficer.profilePicture ? (
-                      <img src={`http://localhost:5000/uploads/profiles/${selectedOfficer.profilePicture}`} className="w-full h-full object-cover" />
+                      <img src={`https://main-armoury-portal-backend.onrender.com/uploads/profiles/${selectedOfficer.profilePicture}`} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-slate-200"><User size={60}/></div>
                     )}

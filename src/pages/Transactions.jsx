@@ -75,7 +75,7 @@ const Transactions = () => {
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage)
 
   const downloadFile = (filePath, fileName) => {
-    const baseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000'
+    const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://main-armoury-portal-backend.onrender.com'
     const url = `${baseUrl}/uploads/${filePath}`
     const link = document.createElement('a')
     link.href = url
@@ -390,7 +390,7 @@ const Transactions = () => {
                                     </div>
                                     <div className="flex gap-1">
                                         <button onClick={() => downloadFile(doc.filePath, doc.description)} className="bg-slate-900 text-white p-1.5 hover:bg-emerald-600 transition-all"><Download size={12}/></button>
-                                        <a href={`${process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000'}/uploads/${doc.filePath}`} target="_blank" rel="noreferrer" className="p-1.5 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-all"><ExternalLink size={12}/></a>
+                                        <a href={`${process.env.REACT_APP_API_BASE_URL || 'https://main-armoury-portal-backend.onrender.com'}/uploads/${doc.filePath}`} target="_blank" rel="noreferrer" className="p-1.5 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-all"><ExternalLink size={12}/></a>
                                     </div>
                                 </div>
                             ))}
