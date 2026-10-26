@@ -12,6 +12,78 @@ const generateToken = (userId) => {
     expiresIn: '7d'
   });
 };
+// @route   POST /api/auth/register
+// @desc    Register a new admin user (admin only)
+// @access  Private (admin)
+router.post('/register', [
+  auth,
+  body('name').trim().isLength({ min: 2, max: 100 }).withMessage('Name must be 2-100 characters'),
+  body('email').isEmail().withMessage('Valid email is required').normalizeEmail(),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid input',
+        errors: errors.array()
+      });
+    }
+
+    // Only an active admin can create another admin
+    const requester = await User.findById(req.user.id);
+    if (!requester || requester.role !== 'admin' || !requester.isActive) {
+      return res.status(403).json({
+        success: false,
+        message: 'Only admins can register new admins'
+      });
+    }
+
+    const { name, email, password } = req.body;
+
+    // Check for duplicate email
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email already exists'
+      });
+    }
+
+    // Password is hashed by the pre-save hook in the model
+    const newAdmin = new User({
+      name,
+      email,
+      password,
+      role: 'admin'
+    });
+
+    await newAdmin.save();
+
+    // toJSON in the model strips password, loginAttempts and lockUntil
+    res.status(201).json({
+      success: true,
+      message: 'Admin registered successfully',
+      user: newAdmin
+    });
+  } catch (error) {
+    console.error('Register error:', error);
+
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email already exists'
+      });
+    }
+
+    res.status(500).json({
+      success: false,
+      message: 'Server error during registration'
+    });
+  }
+});
+
 
 // @route   POST /api/auth/login
 // @desc    Login user
